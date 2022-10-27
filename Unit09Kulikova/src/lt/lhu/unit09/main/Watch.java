@@ -78,62 +78,37 @@ public class Watch {
 		}
 	}
 
-	public void addHour(int addH) {
-		hour += addH;
+	public void addTime(int hour, int minute, int second) {
+
 		if (hour < 0 || hour > 23) {
-			this.hour = 0;
+			throw new RuntimeException("add correct hour");
 		}
-	}
 
-	public void addMinute(int addM) {
-		minute += addM;
-		if (minute < 0 || minute > 59) {
-			this.minute = 0;
-		}
-	}
+		this.hour = this.hour + hour;
+		this.minute = this.minute + minute;
+		this.second = this.second + second;
 
-	public void addSecond(int addS) {
-		second += addS;
-		if (second < 0 || second > 59) {
-			this.second = 0;
+		if (this.second >= 60) {
+			int temp = this.second / 60;
+			this.second = this.second % 60;
+			this.minute = this.minute + temp;
 		}
+
+		if (this.minute >= 60) {
+			int temp = this.minute / 60;
+			this.minute = this.minute % 60;
+			this.hour = this.hour + temp;
+		}
+		if (this.hour >= 23) {
+			int temp = this.hour / 24;
+			this.hour = this.hour % 24;
+			this.hour = this.hour + temp;
+		}
+
 	}
 
 	public void print() {
 		System.out.printf("Time: " + "%02d:%02d:%02d", hour, minute, second);
 	}
 
-	public static void main(String[] args) {
-
-		Watch test1 = new Watch();
-
-		Watch test2 = new Watch(7, 15, 20);
-
-		Watch test3 = new Watch(7, 75, 60);
-
-		test1.print();
-		System.out.println("\n-------------------------");
-		test2.print();
-		System.out.println("\n-------------------------");
-		test3.print();
-		System.out.println("\n-------------------------");
-
-		test1.addHour(5);
-		test1.addMinute(37);
-		test1.addSecond(33);
-		test2.addHour(7);
-		test2.addMinute(37);
-		test2.addSecond(33);
-		test3.addHour(20);
-		test3.addMinute(37);
-		test3.addSecond(33);
-
-		test1.print();
-		System.out.println("\n-------------------------");
-		test2.print();
-		System.out.println("\n-------------------------");
-		test3.print();
-		System.out.println("\n-------------------------");
-
-	}
 }
